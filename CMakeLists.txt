@@ -68,11 +68,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
 option(BUILD_STATIC_LIBS "Build static libraries." ON)
 
-# Reaktoro currently is not setup to produce a dynamic library using MSVC, only static
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-    set(BUILD_SHARED_LIBS OFF)
-endif()
-
 # Define custom options
 option(ENABLE_TESTING "Enable testing." on)
 
@@ -86,24 +81,20 @@ endif()
 # Set libraries to be compiled with position independent code mode (i.e., fPIC option in GNU compilers)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# Set the list of compiler flags for GNU compiler
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-    add_compile_options(-std=c++11)
-endif()
-
-# Set the list of compiler flags for Clang compiler
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
-    add_compile_options(-std=c++11)
-endif()
-
-# Set the list of compiler flags for Intel compiler
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
-    add_compile_options(-std=c++11)
-endif()
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set the list of compiler flags for MSVC compiler
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-    add_compile_options("/W0 -D_SCL_SECURE_NO_WARNINGS /MP4")
+    add_compile_options(
+        /W0
+        /D_SCL_SECURE_NO_WARNINGS
+        /D_CRT_SECURE_NO_WARNINGS
+        /MP4
+        /EHsc
+        /D_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+        /DNOMINMAX
+    )
 endif()
 
 # Set the project directory names
