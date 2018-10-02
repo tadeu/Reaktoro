@@ -113,22 +113,22 @@ reshaped(NRowsType nRows, NColsType nCols) EIGEN_RESHAPED_METHOD_CONST
                  internal::get_runtime_reshape_size(nCols,internal::get_runtime_value(nRows),size()));
 }
 
-template<int Order, typename NRowsType, typename NColsType>
-EIGEN_DEVICE_FUNC
-inline Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
-                internal::get_compiletime_reshape_size<NRowsType,NColsType,SizeAtCompileTime>::value,
-                internal::get_compiletime_reshape_size<NColsType,NRowsType,SizeAtCompileTime>::value,
-                Order==AutoOrder?Flags&RowMajorBit:Order>
-reshaped(NRowsType nRows, NColsType nCols) EIGEN_RESHAPED_METHOD_CONST
-{
-  return Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
-                  internal::get_compiletime_reshape_size<NRowsType,NColsType,SizeAtCompileTime>::value,
-                  internal::get_compiletime_reshape_size<NColsType,NRowsType,SizeAtCompileTime>::value,
-                  Order==AutoOrder?Flags&RowMajorBit:Order>
-                (derived(),
-                 internal::get_runtime_reshape_size(nRows,internal::get_runtime_value(nCols),size()),
-                 internal::get_runtime_reshape_size(nCols,internal::get_runtime_value(nRows),size()));
-}
+//template<int Order, typename NRowsType, typename NColsType>
+//EIGEN_DEVICE_FUNC
+//inline Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
+//                internal::get_compiletime_reshape_size<NRowsType,NColsType,SizeAtCompileTime>::value,
+//                internal::get_compiletime_reshape_size<NColsType,NRowsType,SizeAtCompileTime>::value,
+//                Order==AutoOrder?Flags&RowMajorBit:Order>
+//reshaped(NRowsType nRows, NColsType nCols) EIGEN_RESHAPED_METHOD_CONST
+//{
+//  return Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
+//                  internal::get_compiletime_reshape_size<NRowsType,NColsType,SizeAtCompileTime>::value,
+//                  internal::get_compiletime_reshape_size<NColsType,NRowsType,SizeAtCompileTime>::value,
+//                  Order==AutoOrder?Flags&RowMajorBit:Order>
+//                (derived(),
+//                 internal::get_runtime_reshape_size(nRows,internal::get_runtime_value(nCols),size()),
+//                 internal::get_runtime_reshape_size(nCols,internal::get_runtime_value(nRows),size()));
+//}
 
 // Views as linear vectors
 
@@ -139,23 +139,23 @@ reshaped() EIGEN_RESHAPED_METHOD_CONST
   return Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,SizeAtCompileTime,1>(derived(),size(),1);
 }
 
-template<int Order>
-EIGEN_DEVICE_FUNC
-inline Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
-                Order==RowMajor ? 1 : SizeAtCompileTime,
-                Order==RowMajor ? SizeAtCompileTime : 1,
-                Order==AutoOrder?Flags&RowMajorBit:Order>
-reshaped() EIGEN_RESHAPED_METHOD_CONST
-{
-  EIGEN_STATIC_ASSERT(Order==RowMajor || Order==ColMajor, INVALID_TEMPLATE_PARAMETER);
-  return Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
-                  Order==RowMajor ? 1 : SizeAtCompileTime,
-                  Order==RowMajor ? SizeAtCompileTime : 1,
-                  Order==AutoOrder?Flags&RowMajorBit:Order>
-                (derived(),
-                 Order==RowMajor ? 1 : size(),
-                 Order==RowMajor ? size() : 1);
-}
+//template<int Order>
+//EIGEN_DEVICE_FUNC
+//inline Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
+//                Order==RowMajor ? 1 : SizeAtCompileTime,
+//                Order==RowMajor ? SizeAtCompileTime : 1,
+//                Order==AutoOrder?Flags&RowMajorBit:Order>
+//reshaped() EIGEN_RESHAPED_METHOD_CONST
+//{
+//  EIGEN_STATIC_ASSERT(Order==RowMajor || Order==ColMajor, INVALID_TEMPLATE_PARAMETER);
+//  return Reshaped<EIGEN_RESHAPED_METHOD_CONST Derived,
+//                  Order==RowMajor ? 1 : SizeAtCompileTime,
+//                  Order==RowMajor ? SizeAtCompileTime : 1,
+//                  Order==AutoOrder?Flags&RowMajorBit:Order>
+//                (derived(),
+//                 Order==RowMajor ? 1 : size(),
+//                 Order==RowMajor ? size() : 1);
+//}
 
 #undef EIGEN_RESHAPED_METHOD_CONST
 
