@@ -49,6 +49,9 @@ add_dependencies(ReaktoroObject ${THIRDPARTY_TARGETS})
 
 # Check if a shared library for Reaktoro must be built
 if(BUILD_SHARED_LIBS)
+    if(MSVC)
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    endif()
     add_library(ReaktoroShared SHARED $<TARGET_OBJECTS:ReaktoroObject>)
     target_link_libraries(ReaktoroShared ${THIRDPARTY_LIBS})
     set_target_properties(ReaktoroShared PROPERTIES OUTPUT_NAME Reaktoro)
