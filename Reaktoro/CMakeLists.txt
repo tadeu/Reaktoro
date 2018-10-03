@@ -55,7 +55,17 @@ if(BUILD_SHARED_LIBS)
     add_library(ReaktoroShared SHARED $<TARGET_OBJECTS:ReaktoroObject>)
     target_link_libraries(ReaktoroShared ${THIRDPARTY_LIBS})
     set_target_properties(ReaktoroShared PROPERTIES OUTPUT_NAME Reaktoro)
-    install(TARGETS ReaktoroShared DESTINATION "lib" COMPONENT libraries)
+    install(TARGETS ReaktoroShared
+        ARCHIVE
+            DESTINATION lib
+            COMPONENT libraries
+        LIBRARY
+            DESTINATION lib
+            COMPONENT libraries
+        RUNTIME
+            DESTINATION bin
+            COMPONENT libraries
+    )
 endif()
 
 # Check if a static library for Reaktoro must be built
